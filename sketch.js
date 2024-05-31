@@ -16,6 +16,12 @@ function setup() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   initializeElements();
+
+// Draw background texture
+for (let i = 0; i < 10000; i++) {
+  stroke(200, 200, 250, 50);
+  point(random(width), random(height));
+}
 }
 
 function initializeElements() {
