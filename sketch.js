@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function setup() {
   createCanvas(600, 800);
   background(148, 177, 169); 
@@ -150,3 +151,4 @@ function drawLine(x,y,x1,y1){
   line(x,y,x1,y1)
   pop();
 }
+
