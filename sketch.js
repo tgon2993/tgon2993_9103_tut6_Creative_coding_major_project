@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function setup() {
   createCanvas(600, 800);
   background(148, 177, 169); 
