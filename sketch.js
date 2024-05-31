@@ -1,18 +1,27 @@
+// Define color group
 let colors = ['#6F8F6A', '#C15B5C', '#F8E8B6'];
+// Index of the current color
 let currentColorIndex = 0;
+// Rotation angle initialization
 let rotationAngle = 0;
+// Stores an array of display elements
 let showElements = [];
 // Total number of elements to show
 let totalElements = 26;
+// Index of the currently displayed element
 let currentElementIndex = 0;
+// Whether to enable rotation
 let rotationEnabled = false;
 
+// Create canvas & initialize the elements
 function setup() {
   createCanvas(windowWidth, windowHeight);
   initializeElements();
+  // Add a click event listener
   canvas.addEventListener('click', startAnimation);
 }
 
+// Redefines canvas size when window size changes
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   initializeElements();
@@ -24,13 +33,16 @@ for (let i = 0; i < 10000; i++) {
 }
 }
 
+// Initializes the element
 function initializeElements() {
   showElements = Array(totalElements).fill(false);
 }
 
+// Main drawing part
 function draw() {
   // Clear the background for each frame
   background(148, 177, 169);
+  // Draw the background rect
   drawBackgroundRect(0.08 * width, 0.08 * height, 0.84 * width, 0.84 * height, color(49, 74, 85));
 
   // Green & Red
@@ -45,7 +57,7 @@ function draw() {
   // List of diameters of circles
   let diameters = [0.1 * width, 0.06 * width, 0.04 * width, 0.08 * width];
 
-
+  // Draws circles and line at different positions, depending on the showElements array
   // Middlle center circle
   if (showElements[0]) drawSplitCircle(centerX, centerY, diameters[0], green, red);
   // Left center circles
@@ -86,29 +98,36 @@ function draw() {
 
   // Rotate the circles if all elements have appeared
   if (rotationEnabled) {
-    rotationAngle += 0.01; // Increase the rotation angle
+    // Increase the rotation angle
+    rotationAngle += 0.01; 
   }
 }
 
+// Start animation
 function startAnimation() {
   currentElementIndex = 0;
   rotationEnabled = false;
 
   let interval = setInterval(() => {
+    // Show current elements
     showElements[currentElementIndex] = true;
     currentElementIndex++;
     if (currentElementIndex >= totalElements) {
       clearInterval(interval);
-      rotationEnabled = true; // Enable rotation after all elements are shown
+      // Enable rotation after all elements are shown
+      rotationEnabled = true; 
     }
+    // Displays an element every 500 milliseconds
   }, 500);
 }
 
+// Draw background rect
 function drawBackgroundRect(x, y, width, height, color) {
   fill(color);
   rect(x, y, width, height);
 }
 
+// Draw bottom rectangle and small circle
 function drawBottomRectangles(centerX, y, rectWidth, rectHeight, green, yellow) {
   push();
   let totalWidth = rectWidth * 3;
@@ -123,6 +142,7 @@ function drawBottomRectangles(centerX, y, rectWidth, rectHeight, green, yellow) 
   pop();
 }
 
+// Draw lines
 function drawLine(x, y, x1, y1) {
   push();
   stroke(235, 187, 138);
@@ -131,21 +151,27 @@ function drawLine(x, y, x1, y1) {
   pop();
 }
 
+// Draw circles with green on top and red on bottom
 function drawSplitCircle(x, y, diameter, color1, color2) {
   push();
   translate(x, y);
   if (rotationEnabled) {
+    //// Rotate if rotation is enabled
     rotate(rotationAngle);
   }
   fill(color1);
+  // Top half
   arc(0, 0, diameter, diameter, 0, PI);
   fill(color2);
+  // Lower half
   arc(0, 0, diameter, diameter, PI, 0);
   noFill();
+  // Draw the outline of the circle
   ellipse(0, 0, diameter, diameter);
   pop();
 }
 
+// Draw circles with red on the left and green on the right
 function drawSplitCircleLR(x, y, diameter, color1, color2) {
   push();
   translate(x, y);
@@ -161,6 +187,7 @@ function drawSplitCircleLR(x, y, diameter, color1, color2) {
   pop();
 }
 
+// Draw circles with red on top and green on bottom
 function drawSplitCircleTopRed(x, y, diameter, color1, color2) {
   push();
   translate(x, y);
@@ -176,7 +203,9 @@ function drawSplitCircleTopRed(x, y, diameter, color1, color2) {
   pop();
 }
 
+//Draw rectangles and circles on the bottom rectangle
 function drawRectAndCircle(rectX, rectY, rectWidth, rectHeight, rectColor, circleColor, circleX, circleY, circleDiameter) {
+  noStroke();
   fill(rectColor);
   rect(rectX, rectY, rectWidth, rectHeight);
   fill(circleColor);
