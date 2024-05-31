@@ -3,40 +3,29 @@ let currentColorIndex = 0;
 let rotationAngle = 0;
 let showElements = [];
 // Total number of elements to show
-let totalElements = 25;
+let totalElements = 26;
 let currentElementIndex = 0;
 let rotationEnabled = false;
 
 function setup() {
-  createCanvas(600, 800);
-  background(148, 177, 169);
-
-  drawBackgroundRect(50, 50, width - 100, height - 100, color(49, 74, 85));
-
-  // Green & Red
-  let green = colors[currentColorIndex % colors.length];
-  let red = colors[(currentColorIndex + 1) % colors.length];
-  let yellow = colors[(currentColorIndex + 2) % colors.length];
-
-  // Central position
-  let centerX = width / 2;
-  let centerY = 400;
-
-  // List of diameters of circles
-  let diameters = [80, 50, 30, 60];
-
-  for (let i = 0; i < totalElements; i++) {
-    showElements.push(false);
-  }
-
-  // Add event listener for mouse click
+  createCanvas(windowWidth, windowHeight);
+  initializeElements();
   canvas.addEventListener('click', startAnimation);
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  initializeElements();
+}
+
+function initializeElements() {
+  showElements = Array(totalElements).fill(false);
 }
 
 function draw() {
   // Clear the background for each frame
   background(148, 177, 169);
-  drawBackgroundRect(50, 50, width - 100, height - 100, color(49, 74, 85));
+  drawBackgroundRect(0.08 * width, 0.08 * height, 0.84 * width, 0.84 * height, color(49, 74, 85));
 
   // Green & Red
   let green = colors[currentColorIndex % colors.length];
@@ -45,10 +34,11 @@ function draw() {
 
   // Central position
   let centerX = width / 2;
-  let centerY = 400;
+  let centerY = height / 2;
 
   // List of diameters of circles
-  let diameters = [80, 50, 30, 60];
+  let diameters = [0.1 * width, 0.06 * width, 0.04 * width, 0.08 * width];
+
 
   // Middlle center circle
   if (showElements[0]) drawSplitCircle(centerX, centerY, diameters[0], green, red);
